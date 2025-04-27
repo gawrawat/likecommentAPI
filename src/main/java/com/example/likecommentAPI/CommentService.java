@@ -31,7 +31,8 @@ public class CommentService {
     public Map<String, Object> getCommentById(String id) {
         Optional<Comments> comment = commentsRepository.findById(new ObjectId(id));
         if (comment.isEmpty()) {
-            throw new ResourceNotFoundException("Comment not found with id: " + id);
+            System.out.println("Comment not found with id: " + id);  // Changed print to System.out.println
+            return null;  // Added return null when comment not found
         }
         
         Map<String, Object> response = new HashMap<>();

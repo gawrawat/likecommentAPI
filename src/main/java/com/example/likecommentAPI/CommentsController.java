@@ -20,11 +20,13 @@ public class CommentsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> getCommentById(@PathVariable String id) {
-        Map<String, Object> response = commentService.getCommentById(id);
-        return ResponseEntity.ok(response);
+public ResponseEntity<?> getCommentById(@PathVariable String id) {
+    Map<String, Object> response = commentService.getCommentById(id);
+    if (response == null) {
+        return ResponseEntity.notFound().build();
     }
-
+    return ResponseEntity.ok(response);
+}
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<Map<String, Object>>> getCommentsByCourseId(@PathVariable String courseId) {
         List<Map<String, Object>> response = commentService.getCommentsByCourseId(courseId);
