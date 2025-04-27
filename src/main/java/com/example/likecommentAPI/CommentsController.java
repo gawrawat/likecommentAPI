@@ -2,10 +2,7 @@ package com.example.likecommentAPI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +19,15 @@ public class CommentsController {
         return ResponseEntity.ok(response);
     }
 
-        @GetMapping("/{id}")
-    public Comments getCommentById(@PathVariable String id) {
-        return commentService.getCommentById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> getCommentById(@PathVariable String id) {
+        Map<String, Object> response = commentService.getCommentById(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/course/{courseId}")
-    public List<Comments> getCommentsByCourseId(@PathVariable String courseId) {
-        return commentService.getCommentsByCourseId(courseId);
+    public ResponseEntity<List<Map<String, Object>>> getCommentsByCourseId(@PathVariable String courseId) {
+        List<Map<String, Object>> response = commentService.getCommentsByCourseId(courseId);
+        return ResponseEntity.ok(response);
     }
 }
