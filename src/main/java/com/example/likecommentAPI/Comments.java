@@ -55,4 +55,8 @@ public class Comments {
         
         return this.parsedComments;
     }
+        
+    public void addComment(String newComment) {
+            this.comments.add(newComment);
+        }
 }
