@@ -41,4 +41,20 @@ public class CommentsController {
         Comments savedComment = commentService.addNewComment(newCommentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
+
+    @PutMapping("/update")
+public ResponseEntity<?> updateComment(@RequestBody Map<String, String> body) {
+    try {
+        String courseId = body.get("courseId");
+        String commentId = body.get("commentId");
+        String newComment = body.get("newComment");
+        
+        Comments updatedComment = commentService.updateComment(courseId, commentId, newComment);
+        return ResponseEntity.ok(updatedComment);
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+}
+    
+    
 }

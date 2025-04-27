@@ -74,6 +74,32 @@ public class CommentService {
             return commentsRepository.save(newComments);
         }
     }
+
+    
+    public Comments updateComment(String courseId, String commentId, String newComment) {
+        Optional<Comments> optionalComments = commentsRepository.findById(new ObjectId(commentId));
+        
+        if (optionalComments.isEmpty()) {
+            throw new RuntimeException("Comment not found with id: " + commentId);
+        }
+        
+        Comments comments = optionalComments.get();
+        
+        // Verify the comment belongs to the specified course
+        if (!comments.getCourseId().equals(courseId)) {
+            throw new RuntimeException("Comment does not belong to the specified course");
+        }
+        
+        // Update the comment
+        List<String> commentList = comments.getComments();
+        // Assuming you want to replace the entire comment content
+        commentList.clear();
+        commentList.add(newComment);
+        
+        return commentsRepository.save(comments);
+    }
+
+    
     
 
 }
