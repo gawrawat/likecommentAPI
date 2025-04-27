@@ -7,30 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/comments")
 public class CommentsController {
 
     @Autowired
-    private CommentsRepository commentsRepository;
+    private CommentService commentService;
 
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> getAllComments() {
-        List<Comments> commentsList = commentsRepository.findAll();
-        
-        List<Map<String, Object>> response = commentsList.stream()
-            .map(comments -> {
-                Map<String, Object> map = new HashMap<>();
-                map.put("id", comments.getId());
-                map.put("courseId", comments.getCourseId());
-                map.put("comments", comments.getParsedComments());
-                return map;
-            })
-            .collect(Collectors.toList());
-        
+        List<Map<String, Object>> response = commentService.getAllCommentsWithParsedContent();
         return ResponseEntity.ok(response);
     }
 }
