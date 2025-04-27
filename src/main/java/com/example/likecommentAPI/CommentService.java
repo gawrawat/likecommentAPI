@@ -3,6 +3,9 @@ package com.example.likecommentAPI;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.likecommentAPI.dto.NewCommentRequest;
+
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -55,4 +58,22 @@ public class CommentService {
             })
             .collect(Collectors.toList());
     }
+    
+
+    public Comments addNewComment(NewCommentRequest newCommentRequest) {
+        List<Comments> existingComments = commentsRepository.findByCourseId(newCommentRequest.getCourseId());
+    
+        if (!existingComments.isEmpty()) {
+            Comments existing = existingComments.get(0);
+            existing.addComment(newCommentRequest.getContent());
+            return commentsRepository.save(existing);
+        } else {
+            Comments newComments = new Comments();
+            newComments.setCourseId(newCommentRequest.getCourseId());
+            newComments.setComments(List.of(newCommentRequest.getContent()));
+            return commentsRepository.save(newComments);
+        }
+    }
+    
+
 }
