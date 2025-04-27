@@ -1,5 +1,6 @@
 package com.example.likecommentAPI;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,11 @@ public class LikeController {
         return new ResponseEntity<>(likes, HttpStatus.OK);
     }
 
-    @GetMapping("path")
-    public ResponseEntity<Like> getSingleLikes(@PathVariable ObjectId id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Like> getSingleLike(@PathVariable ObjectId id) {
+        return likeService.singleLike(id)
+                .map(like -> new ResponseEntity<>(like, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     
 }

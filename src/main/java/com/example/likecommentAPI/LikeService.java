@@ -1,8 +1,10 @@
 package com.example.likecommentAPI;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -14,7 +16,7 @@ public class LikeService {
         return likeRepository.findAll();
     }
 
-    public Like singleLike(Object id) {
+    public Optional<Like> singleLike(ObjectId id) {
         return likeRepository.findById(id);
     }
 }
