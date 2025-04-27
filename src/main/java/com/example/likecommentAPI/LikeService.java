@@ -34,5 +34,21 @@ public class LikeService {
             throw new RuntimeException("Course with id " + courseId + " not found");
         }
     }
+
+    public Like deleteLike(String courseId) {
+        Like like = likeRepository.findByCourseId(courseId);
+    
+        if (like != null) {
+            if (like.getLikeCount() > 0) {
+                like.setLikeCount(like.getLikeCount() - 1);
+                return likeRepository.save(like);
+            } else {
+                throw new RuntimeException("Like count is already 0 for course: " + courseId);
+            }
+        } else {
+            throw new RuntimeException("Course with id " + courseId + " not found");
+        }
+    }
+    
     
 }
