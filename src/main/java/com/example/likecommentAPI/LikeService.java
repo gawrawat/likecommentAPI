@@ -13,4 +13,8 @@ public class LikeService {
     public List<Like> getAllLikes() {
         return likeRepository.findAll();
     }
+
+    public Like singleLike(Object id) {
+        return likeRepository.findById(id);
+    }
 }
