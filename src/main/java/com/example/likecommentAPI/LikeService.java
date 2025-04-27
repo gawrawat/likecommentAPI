@@ -23,4 +23,16 @@ public class LikeService {
     public Like singleLikeByCourseId(String courseId) {
         return likeRepository.findByCourseId(courseId);
     }
+
+    public Like addLike(String courseId) {
+        Like like = likeRepository.findByCourseId(courseId);
+    
+        if (like != null) {
+            like.setLikeCount(like.getLikeCount() + 1);
+            return likeRepository.save(like);
+        } else {
+            throw new RuntimeException("Course with id " + courseId + " not found");
+        }
+    }
+    
 }
