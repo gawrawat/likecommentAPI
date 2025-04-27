@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-
 import java.util.List;
-
-
-
 
 @RestController
 @RequestMapping("/api/v1/likes")
@@ -53,13 +49,9 @@ public class LikeController {
         return new ResponseEntity<>(updatedLike, HttpStatus.OK);
     }
 
-    import org.springframework.web.bind.annotation.DeleteMapping;
-
-
-   @DeleteMapping("/deleteLike/{courseId}")
+    @DeleteMapping("/deleteLike/{courseId}")
     public ResponseEntity<Like> deleteLike(@PathVariable String courseId) {
-       Like updatedLike = likeService.deleteLike(courseId);
-       return new ResponseEntity<>(updatedLike, HttpStatus.OK);
-}
-
+        Like updatedLike = likeService.deleteLike(courseId);
+        return new ResponseEntity<>(updatedLike, HttpStatus.OK);
+    }
 }
