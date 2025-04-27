@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,23 +18,19 @@ public class CommentsController {
     private CommentsRepository commentsRepository;
 
     @GetMapping
-    public ResponseEntity<List<Comments>> allComments() {
+    public ResponseEntity<List<Map<String, Object>>> getAllComments() {
         List<Comments> commentsList = commentsRepository.findAll();
-        return ResponseEntity.ok(commentsList);
+        
+        List<Map<String, Object>> response = commentsList.stream()
+            .map(comments -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", comments.getId());
+                map.put("courseId", comments.getCourseId());
+                map.put("comments", comments.getParsedComments());
+                return map;
+            })
+            .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(response);
     }
-
-    @GetMapping
-public ResponseEntity<List<Object>> allComments() {
-    List<Comments> commentsList = commentsRepository.findAll();
-    List<Object> response = commentsList.stream()
-        .map(comments -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("id", comments.getId());
-            map.put("courseId", comments.getCourseId());
-            map.put("comments", comments.getParsedComments());
-            return map;
-        })
-        .collect(Collectors.toList());
-    return ResponseEntity.ok(response);
-}
 }
