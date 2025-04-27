@@ -13,6 +13,7 @@ import java.util.List;
 
 
 
+
 @RestController
 @RequestMapping("/api/v1/likes")
 public class LikeController {
@@ -33,4 +34,13 @@ public class LikeController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<Like> getLikeByCourseId(@PathVariable String courseId) {
+        Like like = likeService.singleLikeByCourseId(courseId);
+        if (like != null) {
+            return new ResponseEntity<>(like, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

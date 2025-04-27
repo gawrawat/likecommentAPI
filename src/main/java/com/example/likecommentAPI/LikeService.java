@@ -19,4 +19,8 @@ public class LikeService {
     public Optional<Like> singleLike(ObjectId id) {
         return likeRepository.findById(id);
     }
+
+    public Like singleLikeByCourseId(String courseId) {
+        return likeRepository.findByCourseId(courseId);
+    }
 }
